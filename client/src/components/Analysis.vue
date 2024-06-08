@@ -10,13 +10,17 @@
           <textarea v-model="testo" class="form-control" aria-label="With textarea"></textarea>
           <button @click="richiesta" type="button" class="btn btn-outline-primary">Cerca</button>
         </div>
+        <!--Mostra il testo a video-->
+        <div>
+          {{ visualizza }}
+        </div>
         <!--Alert in caso di errore della chiamata al server-->
         <div v-if="errore" class="alert alert-danger pb-3" role="alert">
           Errore nella chiamata al server(Dettagli in console)!
         </div>
         <template v-else-if="emozione === '1' || emozione === '0'">
-          <p v-if="emozione === '0'">Tristezza</p>
-          <p v-else>Felicità</p>
+          <p v-if="emozione === '0'"><b>Tristezza 😢</b></p>
+          <p v-else> <b>Felicità 😄</b></p>
         </template>
       </template>
     </div>
@@ -29,6 +33,7 @@
     data() {
       return {
         testo: '', //Variabile per il testo inserito in input
+        visualizza: '', //Variabile per mostrare il testo
         emozione: '', //Emozione restituita dal server basata sul testo
         loading: false, //Boolean per la gestione della chiamata al server
         errore: false, //Boolean che attiva l'alert in caso di errore nella chiamata al server
@@ -45,6 +50,7 @@
           };
           //Viene eseguita la funzione per stabilire l'emozione
           this.findEmotion(payload);
+          this.visualizza = this.testo;
           this.testo = "";
         }else{
           //Se l'utente non inserice del testo viene mostrato l'errore
